@@ -25,7 +25,6 @@ pipeline {
                     bat 'dotnet restore MMartHandMade.csproj'
                     bat 'dotnet build MMartHandMade.csproj --configuration Release'
                     bat 'dotnet publish MMartHandMade.csproj -c Release -o ../publish-api'
-
                 }
             }
         }
@@ -69,5 +68,4 @@ pipeline {
 
         stage('✅ Deployment Complete') {
             steps {
-                echo '🎉 CI/CD pipeline completed successfully!'
-            }
+                echo '🎉 CI/CD pipeline completed su
