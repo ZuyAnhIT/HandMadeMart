@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Clone Source Code') {
             steps {
-                echo '📥 Cloning source code...'
+                echo 'Cloning source code...'
                 git branch: 'main', url: 'https://github.com/ZuyAnhIT/HandMadeMart.git'
             }
         }
@@ -21,7 +21,7 @@ pipeline {
         stage('Build Backend API') {
             steps {
                 dir("${BACKEND_DIR}") {
-                    echo '🔧 Restoring and Building ASP.NET API...'
+                    echo 'Restoring and Building ASP.NET API...'
                     bat 'dotnet restore MMartHandMade.csproj'
                     bat 'dotnet build MMartHandMade.csproj --configuration Release'
                     bat 'dotnet publish MMartHandMade.csproj -c Release -o ../publish-api'
@@ -31,7 +31,7 @@ pipeline {
 
         stage('Copy Frontend to IIS') {
             steps {
-                echo '🌐 Deploying frontend to IIS...'
+                echo 'Deploying frontend to IIS...'
                 bat """
                     iisreset /stop
                     if exist "%FRONTEND_DEST%" rd /S /Q "%FRONTEND_DEST%"
@@ -43,7 +43,7 @@ pipeline {
 
         stage('Copy Backend API to IIS') {
             steps {
-                echo '🚀 Deploying backend API to IIS...'
+                echo 'Deploying backend API to IIS...'
                 bat """
                     if exist "%BACKEND_DEST%" rd /S /Q "%BACKEND_DEST%"
                     mkdir "%BACKEND_DEST%"
@@ -55,17 +55,21 @@ pipeline {
 
         stage('(Optional) Init Database') {
             steps {
-                echo '🗃️ Running database init script...'
+                echo 'Running database init script...'
                 powershell """
                     if (Test-Path '${DB_SCRIPT}') {
                         sqlcmd -S .\\SQLEXPRESS -i '${DB_SCRIPT}'
                     } else {
-                        Write-Output '⚠️ SQL script not found, skipping database init.'
+                        Write-Output 'SQL script not found, skipping database init.'
                     }
                 """
             }
         }
 
-        stage('✅ Deployment Complete') {
+        stage('Deployment Complete') {
             steps {
-                echo '🎉 CI/CD pipeline completed su
+                echo 'CI/CD pipeline completed successfully!'
+            }
+        }
+    }
+}
