@@ -18,16 +18,17 @@ pipeline {
             }
         }
 
-        stage('Build Backend API') {
-            steps {
-                dir("${BACKEND_DIR}") {
-                    echo '🔧 Restoring and Building ASP.NET API...'
-                    bat 'dotnet restore'
-                    bat 'dotnet build --configuration Release'
-                    bat 'dotnet publish -c Release -o ../publish-api'
-                }
-            }
+       stage('Build Backend API') {
+    steps {
+        dir("${BACKEND_DIR}") {
+            echo '🔧 Restoring and Building ASP.NET API...'
+            bat 'dotnet restore MMartHandMade.csproj'
+            bat 'dotnet build MMartHandMade.csproj --configuration Release'
+            bat 'dotnet publish MMartHandMade.csproj -c Release -o ../publish-api'
         }
+    }
+}
+
 
         stage('Copy Frontend to IIS') {
             steps {
